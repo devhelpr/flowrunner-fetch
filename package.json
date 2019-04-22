@@ -1,0 +1,36 @@
+{
+  "name": "@devhelpr/flowrunner-fetch",
+  "version": "0.0.1",
+  "description": "Plugins and helpers to extend flowrunner with fetch",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": "https://www.github.com/devhelpr/flowrunner-fetch",
+  "author": "Maikel van de Lisdonk",
+  "license": "MIT",
+  "dependencies": {
+    "@devhelpr/flowrunner": "0.1.8",
+    "cross-fetch": "^3.0.2",
+    "promise": "^8.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "jest": "^24.5.0",
+    "prettier": "^1.16.4",
+    "ts-jest": "^24.0.0",
+    "tslint": "^5.14.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.4000"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
