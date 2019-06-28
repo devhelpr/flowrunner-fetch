@@ -19,6 +19,7 @@
   "dependencies": {
     "@devhelpr/flowrunner": "0.1.8",
     "cross-fetch": "^3.0.2",
+    "es6-dynamic-template": "^1.0.5",
     "promise": "^8.0.3"
   },
   "devDependencies": {

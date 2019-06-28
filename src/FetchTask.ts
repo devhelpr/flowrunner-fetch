@@ -10,6 +10,9 @@ export class FetchTask extends FlowTask {
 
     let url = node.url;
     /*
+
+    // TODO: replace with es6-dynamic-template
+    
 		if (node.url !== undefined && node.url != "") {
 			let urlTemplate = Handlebars.compile(node.url);
 			url = urlTemplate(cleanPayload);
