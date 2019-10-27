@@ -58,24 +58,23 @@ export class FetchTask extends FlowTask {
     });
   }
 
-  replacePropertiesInUrl = (url : string, data : any) => {
-    
-    // parse {} from url and replace with predefined variabels 
+  replacePropertiesInUrl = (url: string, data: any) => {
+    // parse {} from url and replace with predefined variabels
     var regularExpressionForMatchingCurlyBrackets = /{([^}]+)}/g,
       currentMatch;
 
-    while( currentMatch = regularExpressionForMatchingCurlyBrackets.exec( url ) ) {
-        let value = "";
-        let field = currentMatch[1];
-        if (data[field]) {
-          value = data[field];
-        } else {
-          value = "{" + field + "}";
-        }
-        url = url.replace("{" + currentMatch[1] + "}", value);
+    while ((currentMatch = regularExpressionForMatchingCurlyBrackets.exec(url))) {
+      let value = '';
+      let field = currentMatch[1];
+      if (data[field]) {
+        value = data[field];
+      } else {
+        value = '{' + field + '}';
+      }
+      url = url.replace('{' + currentMatch[1] + '}', value);
     }
     return url;
-  }
+  };
 
   public getDescription() {
     return 'Node that fetches data from an url';
