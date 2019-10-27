@@ -8,16 +8,7 @@ export class FetchTask extends FlowTask {
     cleanPayload.response = undefined;
     cleanPayload.request = undefined;
 
-    let url = node.url;
-    /*
-
-    // TODO: replace with es6-dynamic-template
-    
-		if (node.url !== undefined && node.url != "") {
-			let urlTemplate = Handlebars.compile(node.url);
-			url = urlTemplate(cleanPayload);
-    }
-    */
+    let url = this.replacePropertiesInUrl(node.url, cleanPayload);
 
     return new Promise((resolve, reject) => {
       if (url != '') {
@@ -65,6 +56,25 @@ export class FetchTask extends FlowTask {
         reject();
       }
     });
+  }
+
+  replacePropertiesInUrl = (url : string, data : any) => {
+    
+    // parse {} from url and replace with predefined variabels 
+    var regularExpressionForMatchingCurlyBrackets = /{([^}]+)}/g,
+      currentMatch;
+
+    while( currentMatch = regularExpressionForMatchingCurlyBrackets.exec( url ) ) {
+        let value = "";
+        let field = currentMatch[1];
+        if (data[field]) {
+          value = data[field];
+        } else {
+          value = "{" + field + "}";
+        }
+        url = url.replace("{" + currentMatch[1] + "}", value);
+    }
+    return url;
   }
 
   public getDescription() {
