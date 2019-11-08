@@ -25,8 +25,11 @@ export class FetchTask extends FlowTask {
               resolve(payload);
             })
             .catch(err => {
-              console.error(err);
-              reject();
+              console.error(err);      
+              node.payload = Object.assign({}, node.payload, {
+                followFlow: 'isError',
+              });
+              resolve(node.payload);
             });
         }
         if (node.method == 'post') {
@@ -49,7 +52,10 @@ export class FetchTask extends FlowTask {
             })
             .catch(err => {
               console.error(node.method, err);
-              reject();
+              node.payload = Object.assign({}, node.payload, {
+                followFlow: 'isError',
+              });
+              resolve(node.payload);
             });
         }
       } else {
@@ -69,7 +75,7 @@ export class FetchTask extends FlowTask {
       if (data[field]) {
         value = data[field];
       } else {
-        value = '{' + field + '}';
+        value = '';
       }
       url = url.replace('{' + currentMatch[1] + '}', value);
     }
