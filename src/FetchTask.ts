@@ -25,7 +25,7 @@ export class FetchTask extends FlowTask {
               resolve(payload);
             })
             .catch(err => {
-              console.error(err);      
+              console.error(err);
               node.payload = Object.assign({}, node.payload, {
                 followFlow: 'isError',
               });
