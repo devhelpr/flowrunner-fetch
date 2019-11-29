@@ -13,7 +13,11 @@ export class FetchTask extends FlowTask {
     return new Promise((resolve, reject) => {
       if (url != '') {
         if (node.method === undefined || node.method == '' || node.method == 'get') {
-          fetch(url)
+          fetch(url, {
+              headers: {
+                'Cache-Control': 'no-cache'
+              }
+            })
             .then(res => {
               if (res.status >= 400) {
                 throw new Error(res.status.toString());
