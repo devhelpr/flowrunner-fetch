@@ -25,7 +25,7 @@ export class FetchTask extends FlowTask {
               return res.json();
             })
             .then(data => {
-              const propertyName = node.propertyName || "data";
+              const propertyName = node.propertyName || 'data';
               let payload = Object.assign({}, node.payload, { [propertyName]: data });
               resolve(payload);
             })
@@ -36,8 +36,7 @@ export class FetchTask extends FlowTask {
               });
               resolve(node.payload);
             });
-        }
-        else {
+        } else {
           fetch(url, {
             method: node.method.toUpperCase(),
             body: JSON.stringify(cleanPayload),
