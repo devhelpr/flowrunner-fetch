@@ -2,6 +2,23 @@ import fetch from 'cross-fetch';
 import * as Promise from 'promise';
 import { FlowTask, FlowTaskPackageType } from '@devhelpr/flowrunner';
 
+const getPayload = (node : any, data : any) => {
+  const propertyName = node.propertyName || 'data';
+  let payload;
+  if (!!node.insertResultDirectIntoPayload) {
+    if (node.useChildProperty) {
+      payload = Object.assign({}, node.payload, { ...data[node.useChildProperty] });
+    } else {
+      payload = Object.assign({}, node.payload, { ...data });
+    }
+  } else if (node.useChildProperty) {
+    payload = Object.assign({}, node.payload, { [propertyName]: data[node.useChildProperty] });
+  } else {
+    payload = Object.assign({}, node.payload, { [propertyName]: data });
+  }
+  return payload;
+}
+
 export class FetchTask extends FlowTask {
   public execute(node: any, services: any) {
     let cleanPayload = Object.assign({}, node.payload);
@@ -24,21 +41,8 @@ export class FetchTask extends FlowTask {
               }
               return res.json();
             })
-            .then(data => {
-              const propertyName = node.propertyName || 'data';
-              let payload;
-              if (!!node.insertResultDirectIntoPayload) {
-                if (node.useChildProperty) {
-                  payload = Object.assign({}, node.payload, { ...data[node.useChildProperty] });
-                } else {
-                  payload = Object.assign({}, node.payload, { ...data });
-                }
-              } else if (node.useChildProperty) {
-                payload = Object.assign({}, node.payload, { [propertyName]: data[node.useChildProperty] });
-              } else {
-                payload = Object.assign({}, node.payload, { [propertyName]: data });
-              }
-              resolve(payload);
+            .then(data => {              
+              resolve(getPayload(node, data));
             })
             .catch(err => {
               console.error(err);
@@ -62,8 +66,7 @@ export class FetchTask extends FlowTask {
               return res.json();
             })
             .then(data => {
-              let payload = Object.assign({}, node.payload, { data: data });
-              resolve(payload);
+              resolve(getPayload(node, data));
             })
             .catch(err => {
               console.error(node.method, err);
