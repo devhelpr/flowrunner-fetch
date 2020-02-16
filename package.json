@@ -1,6 +1,6 @@
 {
   "name": "@devhelpr/flowrunner-fetch",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Plugins and helpers to extend flowrunner with fetch",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

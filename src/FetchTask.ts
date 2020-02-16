@@ -2,7 +2,7 @@ import fetch from 'cross-fetch';
 import * as Promise from 'promise';
 import { FlowTask, FlowTaskPackageType } from '@devhelpr/flowrunner';
 
-const getPayload = (node : any, data : any) => {
+const getPayload = (node: any, data: any) => {
   const propertyName = node.propertyName || 'data';
   let payload;
   if (!!node.insertResultDirectIntoPayload) {
@@ -17,7 +17,7 @@ const getPayload = (node : any, data : any) => {
     payload = Object.assign({}, node.payload, { [propertyName]: data });
   }
   return payload;
-}
+};
 
 export class FetchTask extends FlowTask {
   public execute(node: any, services: any) {
@@ -41,7 +41,7 @@ export class FetchTask extends FlowTask {
               }
               return res.json();
             })
-            .then(data => {              
+            .then(data => {
               resolve(getPayload(node, data));
             })
             .catch(err => {
