@@ -27,7 +27,13 @@ export class FetchTask extends FlowTask {
             .then(data => {
               const propertyName = node.propertyName || 'data';
               let payload;
-              if (node.useChildProperty) {
+              if (!!node.insertResultDirectIntoPayload) {
+                if (node.useChildProperty) {
+                  payload = Object.assign({}, node.payload, { ...data[node.useChildProperty] });
+                } else {
+                  payload = Object.assign({}, node.payload, { ...data });
+                }
+              } else if (node.useChildProperty) {
                 payload = Object.assign({}, node.payload, { [propertyName]: data[node.useChildProperty] });
               } else {
                 payload = Object.assign({}, node.payload, { [propertyName]: data });
